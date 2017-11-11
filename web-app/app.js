@@ -5,6 +5,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var session = require('express-session');
+var expressValidator = require('express-validator');
+
 var index = require('./routes/index');
 var users = require('./routes/users');
 
@@ -21,6 +24,38 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Handle Sessions
+app.use(session({
+  // TODO: This is very insecure
+  secret: 'somerandomsecret',
+  saveUninitialized: true,
+  resave: true
+}));
+
+// Validator
+app.use(expressValidator({
+  errorFormatter: function(param, msg, value) {
+    var namespace = param.split('.');
+    var root = namespace.shift();
+    var formParam = root;
+
+    while(namespace.length) {
+      formParam += '[' + namespace.shift() + ']';
+    }
+    return {
+      param : formParam,
+      msg   : msg,
+      value : value
+    };
+  }
+}));
+
+app.use(require('connect-flash')());
+app.use(function (req, res, next) {
+  res.locals.messages = require('express-messages')(req, res);
+  next();
+});
 
 app.use('/', index);
 app.use('/users', users);
