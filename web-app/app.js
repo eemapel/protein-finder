@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var passport = require('passport');
 var session = require('express-session');
 var expressValidator = require('express-validator');
 
@@ -32,6 +33,10 @@ app.use(session({
   saveUninitialized: true,
   resave: true
 }));
+
+// Passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Validator
 app.use(expressValidator({
