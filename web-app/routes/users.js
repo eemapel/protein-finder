@@ -73,14 +73,23 @@ router.post('/register', function(req, res, next) {
       password: password
     });
 
-    User.createUser(newUser, function(err, username) {
-      if (err) throw err;
+    // First check that the user does not exist
+    User.find({ username: username }, function(err, docs) {
+      if (docs.length) {
+        res.render('register', {
+          errors: [{ msg: 'User already exists'}]
+        });
+      } else {
+        User.createUser(newUser, function(err, username) {
+          if (err) throw err;
 
-      console.log("New user created:", username);
-      req.flash('success', 'You are now registered and can login');
+          console.log("New user created:", username);
+          req.flash('success', 'You are now registered and can login');
 
-      res.location('/');
-      res.redirect('/');
+          res.location('/');
+          res.redirect('/');
+        });
+      }
     });
   }
 });
