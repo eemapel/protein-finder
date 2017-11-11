@@ -1,6 +1,11 @@
 version: '3'
 
 services:
+  web-app:
+    build: ./web-app
+    ports:
+      - '80:3000'
+
   mongo:
     image: 'mongo'
     ports:
