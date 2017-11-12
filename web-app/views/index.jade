@@ -3,3 +3,15 @@ extends layout
 block content
   h1 Members Area
   p Welcome to Protein Finder
+  form(method='post', action='/sequence')
+    .form-group
+      label Sequence
+      input.form-control(name='sequence', type='text', placeholder='Enter Sequence (Example: "ACGTACGA")')
+    input.btn.btn-primary(type='submit', name='submit', value='Find')
+  br
+  br
+  if queries
+    each query in queries
+      div.alert.alert-success
+        b Query #{query.query}
+        li= query
