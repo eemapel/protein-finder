@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+// var portfinder = require(portfinder);
 
 var Sequence = require('../models/sequence');
 
@@ -42,9 +43,9 @@ router.post('/sequence', function(req, res, next) {
          key = users[i].query;
          if (!(key in dict)) {
             dict[key] = {};
-            dict[key]["queries"] = [];
+            dict[key].queries = [];
          }
-         dict[key]["queries"].push(users[i]._id);
+         dict[key].queries.push(users[i]._id);
        }
        console.log(dict);
        res.render('index', { queries: users, user: req.user.username || null });
