@@ -4,7 +4,6 @@ import sys
 import requests as sender
 from flask import Flask, abort, request 
 import json
-from time import sleep
 import threading
 
 from protein import Protein
@@ -29,8 +28,6 @@ def match_provider(port, sequence):
 
     for code in protein_codes:
         if p.check_sequence_alignment(code, sequence):
-            # Some unnecessary artificial delay just to emphasize rendering on UI
-            sleep(2)
             sender.put('http://localhost:' + port, data=dict(reply=p.get_name(code)))
 
     print "Removing connection to port", port
