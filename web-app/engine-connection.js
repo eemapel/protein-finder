@@ -18,9 +18,9 @@ function runTemporaryServer() {
       enableDestroy(server);
       console.log("Opening connection to bio-engine at port", port);
       request({
-          url: "http://localhost:3000",
+          url: "http://localhost:7000",
           method: "POST",
-          body: { "port": port, "sequence": "ABCD" },
+          body: { "port": port, "sequence": "AATCAAATATTATTTAGCAGATAATATCTA" },
           json: true
         }, function(error, response, body) {
           if(error) {
@@ -51,5 +51,4 @@ function runTemporaryServer() {
   });
 }
 
-runTemporaryServer();
 runTemporaryServer();

@@ -9,7 +9,9 @@ import threading
 
 from protein import Protein
 
+# Globals
 app = Flask(__name__)
+p = Protein(sys.argv[1:])
 
 #Entrez.email = "noreply@noreply.na"
 
@@ -24,32 +26,35 @@ app = Flask(__name__)
 #     |  ----- DELETE (finished) ----->  |
 #     |                               (close port)
 
-def query_engine(port):
-    sleep(5)
-    data = dict(name='joe', age='10')
-    sender.put('http://localhost:' + port, data=dict(reply='1'))
-    sleep(5)
-    sender.put('http://localhost:' + port, data=dict(reply='2'))
-    sleep(5)
-    print "Deleting connection at port", port
+def match_provider(port, sequence):
+    protein_codes = p.get_code_list()
+
+    for code in protein_codes:
+        if p.check_sequence_alignment(code, sequence):
+            # Some unnecessary artificial delay just to emphasize rendering on UI
+            sleep(2)
+            sender.put('http://localhost:' + port, data=dict(reply=p.get_name(code)))
+
+    print "Removing connection to port", port
     sender.delete('http://localhost:' + port)
 
 @app.route('/', methods=['POST']) 
-def foo():
+def post_handler():
     if not request.json:
         abort(400)
-    print request.json
-    port = str(request.json["port"])
 
-    t = threading.Thread(target=query_engine, args=(port,))
+    print "POST request received with:", request.json
+    port = str(request.json["port"])
+    sequence = request.json["sequence"]
+
+    t = threading.Thread(target=match_provider, args=(port, sequence,))
     t.start()
  
     return "OK"
 
 if __name__ == '__main__':
-    p = Protein(sys.argv[1:])
 
-    # Show loaded proteins
+    print "Loaded proteins:"
     p.print_names()
 
     # Start server appliance
