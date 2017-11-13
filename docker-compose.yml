@@ -5,13 +5,15 @@ services:
     build: ./web-app
     ports:
       - '80:3000'
+      - '8000-8079:8000-8079'
+    depends_on:
+      - bio-engine
+      - mongo
 
   bio-engine:
     build: ./bio-engine
     ports:
       - '7000:7000'
-    # TODO: remove once aliases used properly
-    network_mode: 'host'
 
   mongo:
     image: 'mongo'
@@ -19,4 +21,3 @@ services:
       - '27017:27017'
     volumes:
       - './db_data:/data/db'
-

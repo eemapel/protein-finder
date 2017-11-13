@@ -1,8 +1,7 @@
 var bcrypt = require('bcryptjs');
 var mongoose = require('mongoose');
 
-// TODO: Use docker alias
-mongoose.connect('mongodb://localhost/proteinfinder');
+mongoose.connect('mongodb://mongo/proteinfinder');
 
 var db = mongoose.connection;
 

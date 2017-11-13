@@ -21,13 +21,13 @@ module.exports.connectionManager = function(username, query, callback) {
       enableDestroy(server);
       console.log("Opening connection to bio-engine at port", port);
       request({
-          url: "http://localhost:7000",
+          url: "http://bio-engine:7000",
           method: "POST",
           body: { "port": port, "sequence": query.toUpperCase() },
           json: true
         }, function(error, response, body) {
           if(error) {
-            console.log("Something went wrong..");
+            console.log("Something went wrong..", error);
           }
         }
       );

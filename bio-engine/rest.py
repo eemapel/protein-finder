@@ -28,10 +28,10 @@ def match_provider(port, sequence):
 
     for code in protein_codes:
         if p.check_sequence_alignment(code, sequence):
-            sender.put('http://localhost:' + port, data=dict(reply=p.get_name(code)))
+            sender.put('http://web-app:' + port, data=dict(reply=p.get_name(code)))
 
     print "Removing connection to port", port
-    sender.delete('http://localhost:' + port)
+    sender.delete('http://web-app:' + port)
 
 @app.route('/', methods=['POST']) 
 def post_handler():
