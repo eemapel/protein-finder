@@ -45,10 +45,10 @@ module.exports.connectionManager = function(callback) {
         } else if (req.method == "DELETE") {
           console.log("Delete received!");
           server.destroy();
+          callback();
         }
       });
     });
   });
 };
 
-//this.connectionManager();
