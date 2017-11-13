@@ -13,7 +13,9 @@ function ensureAuthenticated(req, res, next) {
 
 /* GET home page. */
 router.get('/', ensureAuthenticated, function(req, res, next) {
-  res.render('index', { title: 'Members' });
+  Sequence.getRecords(req.user.username, function(err, users) {
+    res.render('index', { title: 'Members', queries: users, user: req.user.username || null });
+  });
 });
 
 // Sequence query received?
@@ -21,29 +23,10 @@ router.post('/sequence', function(req, res, next) {
   console.log("Sequence is:", req.body.sequence);
   console.log("Username is:", req.user.username);
 
-  // TODO: Some error handling first
-  //var newSequence = new Sequence({
-  //  username: req.user.username,
-  //  query: req.body.sequence,
-  //  protein: ''
-  //});
-
   console.log("Start connection manager..");
   CM.connectionManager(req.user.username, req.body.sequence, function() {
-    var dict = {};
-
     Sequence.getRecords(req.user.username, function(err, users) {
-      var queries = [];
-        for (var i in users) {
-          key = users[i].query;
-          if (!(key in dict)) {
-            dict[key] = [];
-            dict[key].queries = [];
-          }
-          dict[key].queries.push(users[i].protein);
-       }
-       console.log(dict);
-       res.render('index', { queries: users, user: req.user.username || null });
+      res.render('index', { queries: users, user: req.user.username || null });
     });
   });
 });
