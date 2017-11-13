@@ -20,10 +20,15 @@ router.get('/', ensureAuthenticated, function(req, res, next) {
 
 // Sequence query received?
 router.post('/sequence', function(req, res, next) {
+  // If username not defined, direct to login screen first
+  if (req.user.username == undefined) {
+    res.redirect('/users/login');
+  }
+
   console.log("Sequence is:", req.body.sequence);
   console.log("Username is:", req.user.username);
-
   console.log("Start connection manager..");
+
   CM.connectionManager(req.user.username, req.body.sequence, function() {
     Sequence.getRecords(req.user.username, function(err, users) {
       res.render('index', { queries: users, user: req.user.username || null });

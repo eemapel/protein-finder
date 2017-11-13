@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+/*jshint sub:true*/
 
 var http = require('http');
 var request = require('request');
