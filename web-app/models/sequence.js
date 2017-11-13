@@ -28,6 +28,6 @@ module.exports.createRecord = function(newSequence, callback) {
 };
 
 module.exports.getRecords = function(username, callback) {
-  Sequence.find({ username: username }, callback);
+  Sequence.find({ username: username }).exec(callback);
 };
 

@@ -11,7 +11,8 @@ block content
   br
   br
   if queries
-    each query in queries
+    each query in queries.reverse()
       div.alert.alert-success
-        b Query #{query.query}
-        li= query
+        b Query : #{query.query}
+        br
+        b Found : #{query.protein}

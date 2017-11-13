@@ -37,10 +37,10 @@ router.post('/sequence', function(req, res, next) {
         for (var i in users) {
           key = users[i].query;
           if (!(key in dict)) {
-            dict[key] = {};
+            dict[key] = [];
             dict[key].queries = [];
           }
-          dict[key].queries.push(users[i]._id);
+          dict[key].queries.push(users[i].protein);
        }
        console.log(dict);
        res.render('index', { queries: users, user: req.user.username || null });
