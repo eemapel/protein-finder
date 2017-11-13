@@ -23,7 +23,7 @@ module.exports.connectionManager = function(username, query, callback) {
       request({
           url: "http://localhost:7000",
           method: "POST",
-          body: { "port": port, "sequence": "TTATTTAGCAGA" },
+          body: { "port": port, "sequence": query.toUpperCase() },
           json: true
         }, function(error, response, body) {
           if(error) {
@@ -48,7 +48,7 @@ module.exports.connectionManager = function(username, query, callback) {
 
           var newSequence = new Sequence({
             username: username,
-            query: query,
+            query: query.toUpperCase(),
             protein: qs.parse(data)["reply"]
           });
 
