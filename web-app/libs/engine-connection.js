@@ -7,7 +7,7 @@ var enableDestroy = require('server-destroy');
 var qs = require('querystring');
 
 // Run custom server for each sequence query
-function runTemporaryServer() {
+module.exports.connectionManager = function(callback) {
   // Find open port on range 8000 ->
   portfinder.getPort(function (err, port) {
     if (err) throw err;
@@ -49,6 +49,6 @@ function runTemporaryServer() {
       });
     });
   });
-}
+};
 
-runTemporaryServer();
+//this.connectionManager();

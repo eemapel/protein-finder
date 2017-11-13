@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
-// var portfinder = require(portfinder);
 
 var Sequence = require('../models/sequence');
+var CM = require('../libs/engine-connection');
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
@@ -18,7 +18,6 @@ router.get('/', ensureAuthenticated, function(req, res, next) {
 
 // Sequence query received?
 router.post('/sequence', function(req, res, next) {
-  console.log("yey, got a sequence");
   console.log("Sequence is:", req.body.sequence);
   console.log("Username is:", req.user.username);
 
@@ -28,6 +27,9 @@ router.post('/sequence', function(req, res, next) {
     query: req.body.sequence,
     protein: ''
   });
+
+  console.log("Start connection manager..");
+  CM.connectionManager();
 
   // TODO: Only ask to create if does not already exist, otherwise sorting gets mixed up too..
   Sequence.createRecord(newSequence, function(err, sequence) {
