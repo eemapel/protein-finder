@@ -7,7 +7,9 @@ class Protein:
     dictionary = {}
 
     def __init__(self, nc_codes):
-        for key in nc_codes:
+        codes = nc_codes.split(",")
+
+        for key in codes:
             handle = Entrez.esearch(db="nucleotide", term=key + "[Locus]")
             record = Entrez.read(handle)
             if len(record['IdList']) != 1:

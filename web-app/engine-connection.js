@@ -20,7 +20,7 @@ function runTemporaryServer() {
       request({
           url: "http://localhost:7000",
           method: "POST",
-          body: { "port": port, "sequence": "AATCAAATATTATTTAGCAGATAATATCTA" },
+          body: { "port": port, "sequence": "TTATTTAGCAGA" },
           json: true
         }, function(error, response, body) {
           if(error) {

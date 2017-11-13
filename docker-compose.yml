@@ -6,6 +6,13 @@ services:
     ports:
       - '80:3000'
 
+  bio-engine:
+    build: ./bio-engine
+    ports:
+      - '7000:7000'
+    # TODO: remove once aliases used properly
+    network_mode: 'host'
+
   mongo:
     image: 'mongo'
     ports:

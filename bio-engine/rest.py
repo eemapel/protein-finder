@@ -11,9 +11,7 @@ from protein import Protein
 
 # Globals
 app = Flask(__name__)
-p = Protein(sys.argv[1:])
-
-#Entrez.email = "noreply@noreply.na"
+p = Protein("NC_000852,NC_007346,NC_008724,NC_009899,NC_014637,NC_020104,NC_023423,NC_023640,NC_023719,NC_027867")
 
 # Design
 # ------
