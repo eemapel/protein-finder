@@ -21,7 +21,7 @@ router.get('/', ensureAuthenticated, function(req, res, next) {
 // Sequence query received?
 router.post('/sequence', function(req, res, next) {
   // If username not defined, direct to login screen first
-  if (req.user.username == undefined) {
+  if (req.user == undefined || req.user.username == undefined) {
     res.redirect('/users/login');
   }
 
