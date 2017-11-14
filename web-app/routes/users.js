@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var waitForPort = require('wait-for-port');
 
 var User = require('../models/user');
 
@@ -19,8 +20,12 @@ router.get('/login', function(req, res, next) {
 });
 
 router.post('/login', passport.authenticate('local', { failureRedirect: '/users/login', failureFlash: 'Invalid username or password' }), function(req, res) {
-  req.flash('success', 'You are now logged in');
-  res.redirect('/');
+  waitForPort('bio-engine', 7000, function(err) {
+    if (err) throw err;
+
+    req.flash('success', 'You are now logged in');
+    res.redirect('/');
+  });
 });
 
 passport.serializeUser(function(user, done) {

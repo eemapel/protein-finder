@@ -30,7 +30,8 @@
     "passport-local": "~1.0.0",
     "portfinder": "~1.0.13",
     "request": "~2.83.0",
-    "server-destroy": "~1.0.1"
+    "server-destroy": "~1.0.1",
+    "wait-for-port": "~0.0.2"
   },
   "devDependencies": {
     "jshint": "~2.9.5"
