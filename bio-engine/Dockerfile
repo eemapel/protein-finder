@@ -3,7 +3,7 @@ from python:2
 WORKDIR /usr/src/engine
 
 # Copy needed files
-COPY *.py nc-codes.txt ./
+COPY *.py ./
 
 RUN pip install \
   biopython \
